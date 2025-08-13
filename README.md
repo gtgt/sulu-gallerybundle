@@ -49,18 +49,18 @@ bin/console do:sch:up --force
 
 ## Bundle Config
 
-Define the Admin Api Route in `routes_admin.yaml`
+Define the Admin Api Route in `config/routes/gallery.yaml`
 ```yaml
 gallery.albums_api:
   type: rest
   prefix: /admin/api
-  resource: pixel_gallery.albums_route_controller
+  resource: Pixel\GalleryBundle\Controller\Admin\AlbumController
   name_prefix: gallery.
 
 gallery.settings_api:
   type: rest
   prefix: /admin/api
-  resource: pixel_gallery.settings_route_controller
+  resource: Pixel\GalleryBundle\Controller\Admin\SettingController
   name_prefix: gallery.
 ```
 

@@ -7,77 +7,52 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Sulu\Bundle\MediaBundle\Entity\MediaInterface;
+use Pixel\GalleryBundle\Repository\AlbumRepository;
 
-/**
- * @ORM\Entity()
- * @ORM\Table(name="gallery_album")
- * @ORM\Entity(repositoryClass="Pixel\GalleryBundle\Repository\AlbumRepository")
- * @Serializer\ExclusionPolicy("all")
- */
-class Album
-{
-    public const RESOURCE_KEY = 'albums';
-    public const FORM_KEY = 'album_details';
-    public const LIST_KEY = 'albums';
-    public const SECURITY_CONTEXT = 'gallery.albums';
 
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     *
-     * @Serializer\Expose()
-     */
+#[ORM\Entity(repositoryClass: AlbumRepository::class)]
+#[ORM\Table(name: 'gallery_album')]
+#[Serializer\ExclusionPolicy('all')]
+class Album {
+    public const string RESOURCE_KEY = 'albums';
+    public const string FORM_KEY = 'album_details';
+    public const string LIST_KEY = 'albums';
+    public const string SECURITY_CONTEXT = 'gallery.albums';
+
+    #[ORM\Id()]
+    #[ORM\GeneratedValue()]
+    #[ORM\Column(type: 'integer')]
+    #[Serializer\Expose()]
     private ?int $id = null;
 
-    /**
-     * @var bool
-     *
-     * @ORM\Column(type="boolean", nullable=false)
-     * @Serializer\Expose()
-     */
-    private $enabled;
+    #[ORM\Column(type: 'boolean', nullable: false)]
+    #[Serializer\Expose()]
+    private bool $enabled;
 
-    /**
-     * @var Collection<string, AlbumTranslation>
-     *
-     * @ORM\OneToMany(targetEntity="Pixel\GalleryBundle\Entity\AlbumTranslation", mappedBy="album", cascade={"ALL"}, indexBy="locale")
-     *
-     * @Serializer\Exclude
-     */
-    private $translations;
+    #[ORM\OneToMany(mappedBy: 'album', targetEntity: AlbumTranslation::class, cascade: ['ALL'], indexBy: 'locale')]
+    #[Serializer\Exclude]
+    private Collection|ArrayCollection $translations;
 
     /**
      * @var string
      */
-    private $locale = 'fr';
+    private string $locale = 'fr';
 
-    /**
-     * @ORM\Column(type="json", nullable=true)
-     *
-     * @Serializer\Expose()
-     * @var array<mixed>
-     */
+    #[ORM\Column(type: 'json', nullable: true)]
+    #[Serializer\Expose()]
     private ?array $location = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=MediaInterface::class)
-     * @ORM\JoinColumn(onDelete="SET NULL")
-     */
+    #[ORM\ManyToOne(targetEntity: MediaInterface::class)]
+    #[ORM\JoinColumn(onDelete: 'SET NULL')]
     private ?MediaInterface $logo = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=MediaInterface::class)
-     * @ORM\JoinColumn(onDelete="SET NULL")
-     * @Serializer\Expose()
-     */
+    #[ORM\ManyToOne(targetEntity: MediaInterface::class)]
+    #[ORM\JoinColumn(onDelete: 'SET NULL')]
+    #[Serializer\Expose()]
     private ?MediaInterface $cover = null;
 
-    /**
-     * @ORM\Column(type="json", nullable=true)
-     * @Serializer\Expose()
-     * @var array<mixed>|null
-     */
+    #[ORM\Column(type: 'json', nullable: true)]
+    #[Serializer\Expose()]
     private ?array $medias;
 
     public function __construct()
@@ -122,8 +97,8 @@ class Album
     /**
      * @return array<string, mixed>
      *
-     * @Serializer\VirtualProperty()
-     * @Serializer\SerializedName("logo")
+     * #[Serializer\VirtualProperty()
+     * #[Serializer\SerializedName('logo')
      */
     public function getLogoData(): ?array
     {
@@ -167,7 +142,7 @@ class Album
     }
 
     /**
-     * @Serializer\VirtualProperty(name="title")
+     * #[Serializer\VirtualProperty(name: 'title')
      */
     public function getName(): ?string
     {
@@ -209,7 +184,7 @@ class Album
     }
 
     /**
-     * @Serializer\VirtualProperty(name="description")
+     * #[Serializer\VirtualProperty(name: 'description')
      */
     public function getDescription(): ?string
     {
@@ -234,7 +209,7 @@ class Album
     }
 
     /**
-     * @Serializer\VirtualProperty(name="seo")
+     * #[Serializer\VirtualProperty(name: 'seo')
      * @return array<mixed>|null
      */
     public function getSeo(): ?array
@@ -253,20 +228,20 @@ class Album
     protected function emptySeo(): array
     {
         return [
-            "seo" => [
-                "title" => "",
-                "description" => "",
-                "keywords" => "",
-                "canonicalUrl" => "",
-                "noIndex" => "",
-                "noFollow" => "",
-                "hideinSitemap" => "",
+            'seo' => [
+                'title'         => '',
+                'description'   => '',
+                'keywords'      => '',
+                'canonicalUrl'  => '',
+                'noIndex'       => '',
+                'noFollow'      => '',
+                'hideinSitemap' => '',
             ],
         ];
     }
 
     /**
-     * @Serializer\VirtualProperty(name="ext")
+     * #[Serializer\VirtualProperty(name: 'ext')
      * @return array<mixed>|null
      */
     public function getExt(): ?array
@@ -296,7 +271,7 @@ class Album
     }
 
     /**
-     * @Serializer\VirtualProperty(name="route")
+     * #[Serializer\VirtualProperty(name: 'route')
      */
     public function getRoutePath(): ?string
     {

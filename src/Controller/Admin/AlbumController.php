@@ -11,7 +11,6 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 use FOS\RestBundle\View\ViewHandlerInterface;
-use Pixel\DirectoryBundle\Entity\Card;
 use Pixel\GalleryBundle\Common\DoctrineListRepresentationFactory;
 use Pixel\GalleryBundle\Domain\Event\AlbumCreatedEvent;
 use Pixel\GalleryBundle\Domain\Event\AlbumModifiedEvent;
@@ -32,9 +31,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-
-//use HandcraftedInTheAlps\RestRoutingBundle\Controller\Annotations\RouteResource;
-//use HandcraftedInTheAlps\RestRoutingBundle\Routing\ClassResourceInterface;
 
 /**
  * @RouteResource("album")

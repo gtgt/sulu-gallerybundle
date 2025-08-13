@@ -6,71 +6,48 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Sulu\Component\Persistence\Model\AuditableInterface;
 use Sulu\Component\Persistence\Model\AuditableTrait;
+use Pixel\GalleryBundle\Entity\Album;
+use Pixel\GalleryBundle\Repository\AlbumRepository;
 
-/**
- * @ORM\Entity()
- * @ORM\Table(name="gallery_album_translation")
- * @ORM\Entity(repositoryClass="Pixel\GalleryBundle\Repository\AlbumRepository")
- * @Serializer\ExclusionPolicy("all")
- */
+
+#[ORM\Entity(repositoryClass: AlbumRepository::class)]
+#[ORM\Table(name: 'gallery_album_translation')]
+#[Serializer\ExclusionPolicy('all')]
+
 class AlbumTranslation implements AuditableInterface
 {
     use AuditableTrait;
 
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     *
-     * @Serializer\Expose()
-     */
+    #[ORM\Id()]
+    #[ORM\GeneratedValue()]
+    #[ORM\Column(type: 'integer')]
+    #[Serializer\Expose()]
     private ?int $id = null;
 
-    /**
-     * @var Album
-     *
-     * @ORM\ManyToOne(targetEntity="Pixel\GalleryBundle\Entity\Album", inversedBy="translations")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $album;
+    #[ORM\ManyToOne(targetEntity: Album::class, inversedBy: 'translations')]
+    #[ORM\JoinColumn(nullable: false)]
+    private Album $album;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=5)
-     */
-    private $locale;
+    #[ORM\Column(type: 'string', length: 5)]
+    private string $locale;
 
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     *
-     * @Serializer\Expose()
-     */
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Serializer\Expose()]
     private string $name;
 
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     *
-     * @Serializer\Expose()
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
+    #[Serializer\Expose()]
     private ?string $description;
 
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     *
-     * @Serializer\Expose()
-     */
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Serializer\Expose()]
     private string $routePath;
 
-    /**
-     * @ORM\Column(type="json", nullable=true)
-     *
-     * @Serializer\Expose()
-     * @var array<mixed>
-     */
+    #[ORM\Column(type: 'json', nullable: true)]
+    #[Serializer\Expose()]
     private ?array $seo = null;
 
 
@@ -121,7 +98,7 @@ class AlbumTranslation implements AuditableInterface
     }
 
     /**
-     * @return array<mixed>|null
+    #[return array<mixed>|null
      */
     public function getSeo(): ?array
     {
@@ -129,7 +106,7 @@ class AlbumTranslation implements AuditableInterface
     }
 
     /**
-     * @param array<mixed>|null $seo
+    #[param array<mixed>|null $seo
      */
     public function setSeo(?array $seo): void
     {

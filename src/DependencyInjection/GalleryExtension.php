@@ -18,6 +18,21 @@ class GalleryExtension extends Extension implements PrependExtensionInterface
 
     public function prepend(ContainerBuilder $container): void
     {
+        $container->prependExtensionConfig(
+            'doctrine', [
+                'orm' => [
+                    'mappings' => [
+                        'GalleryBundle' => [
+                            'type' => 'attribute',
+                            'is_bundle' => true,
+                            'alias' => 'GalleryBundle',
+                            'prefix' => 'Pixel\GalleryBundle\Entity',
+                            'dir' => 'Entity'
+                        ]
+                    ]
+                ],
+            ]
+        );
         if ($container->hasExtension('sulu_admin')) {
             $container->prependExtensionConfig(
                 'sulu_admin',
